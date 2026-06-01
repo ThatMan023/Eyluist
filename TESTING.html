@@ -26,38 +26,42 @@
     [data-gender="female"] { --gender-color: #ff5983; }
 
     body {
-      background-color: #000;
+      background-color: transparent; /* Made transparent to honor parent iframe styling */
       color: var(--text-color);
       margin: 0;
       display: flex;
       justify-content: center; 
       align-items: center;     
-      min-height: 100vh;       
-      padding: 20px;
+      height: 100vh; /* Changed to lock element boundaries exactly to iframe height */       
+      padding: 10px;
       box-sizing: border-box;
       font-family: var(--main-font);
+      overflow: hidden; /* Completely disables scrolling inside the document */
     }
 
     .charMainContainer {
       display: flex;
       flex-direction: row;
-      align-items: stretch;
-      gap: 30px;
+      align-items: center; /* Aligns content cleanly when compressed vertically */
+      gap: 20px; /* Reduced from 30px */
       width: 100%;
       max-width: 1100px;
-      min-height: 400px;
+      height: 100%; /* Forces card container to scale dynamically to iframe height */
+      max-height: calc(100vh - 20px);
       background: var(--container-bg);
-      padding: 25px;
-      border-radius: 30px;
+      padding: 20px; /* Tighter padding for optimization */
+      border-radius: 25px;
       box-shadow: 0 10px 30px rgba(0,0,0,0.4);
       margin: auto; 
+      box-sizing: border-box;
     }
 
     /* --- LEFT SIDE: PROFILE PICTURE --- */
     .charContainerLeft {
-      flex: 0 0 35%;
-      max-width: 400px;
-      border-radius: 25px;
+      flex: 0 0 32%; /* Balanced to give description text more room */
+      height: 100%;
+      max-height: 100%;
+      border-radius: 20px;
       overflow: hidden;
       position: relative;
     }
@@ -80,21 +84,21 @@
       text-shadow: 0 0 15px var(--gender-color);
       background: rgba(25, 25, 25, 0.4);
       box-shadow: 0px 0px 5px 1px rgba(255, 255, 255, 0.5);
-      padding: 10px;
-      margin: 15px;
+      padding: 8px;
+      margin: 12px;
       position: absolute;
       top: 0;
       right: 0;
       z-index: 10;
-      font-size: 2.5rem;
+      font-size: 2rem;
       border-radius: 50%;
       backdrop-filter: blur(4px);
       user-select: none;
       display: flex;
       justify-content: center;
       align-items: center;
-      width: 45px;
-      height: 45px;
+      width: 38px;
+      height: 38px;
     }
 
     /* --- RIGHT SIDE: DESCRIPTION AREA --- */
@@ -102,15 +106,18 @@
       flex: 1;
       display: flex;
       flex-direction: column;
+      height: 100%;
+      justify-content: center; /* Distributes inner blocks proportionally inside frame */
     }
 
     .charTitle {
       text-align: center;
-      font-size: 5.5rem;
-      margin: 10px;
-      padding: 15px;
+      font-size: 3rem; /* Optimized from 5.5rem to prevent vertical blowout */
+      margin: 0 0 5px 0;
+      padding: 0;
       text-transform: uppercase;
       font-family: 'Oswald', sans-serif;
+      line-height: 1.1;
     }
 
     .titleSeparator {
@@ -118,7 +125,7 @@
       height: 1px;
       border: none;
       background: linear-gradient(to right, transparent, #555, transparent);
-      margin: 0 auto 20px auto;
+      margin: 5px auto 12px auto;
     }
 
     /* --- CHIPS --- */
@@ -127,9 +134,9 @@
       flex-direction: row;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 12px;
+      gap: 8px;
       width: 100%;
-      margin-bottom: 15px;
+      margin-bottom: 12px;
       user-select: none;
     }
 
@@ -138,10 +145,10 @@
       align-items: center;
       background-color: var(--chip-bg);
       color: var(--text-color);
-      padding: 4px 14px 4px 4px;
+      padding: 4px 12px 4px 4px;
       border-radius: 50px;
       font-family: var(--chip-font);
-      font-size: 13px;
+      font-size: 11px; /* Scaled down slightly */
       font-weight: 600;
       letter-spacing: 0.5px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.3);
@@ -153,7 +160,7 @@
     }
 
     .trait-chip:hover {
-      transform: translateY(-3px);
+      transform: translateY(-2px);
       background-color: #3d3d3d;
     }
 
@@ -161,30 +168,31 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 30px;
-      height: 30px;
+      width: 24px; /* Scaled down slightly */
+      height: 24px;
       background-color: var(--icon-color, #555);
       color: white;
       border-radius: 50%;
-      margin-right: 12px;
-      font-size: 16px;
+      margin-right: 8px;
+      font-size: 14px;
       flex-shrink: 0;
     }
 
     /* --- TEXT DESCRIPTION --- */
     .charDescriptionText {
-      font-size: 1.1rem;
-      line-height: 1.6;
+      font-size: 0.95rem; /* Adjusted for scannable, compact UI height */
+      line-height: 1.5;
       color: #cccccc;
       text-align: justify;
-      margin: auto 0;
+      margin: 0;
+      overflow: hidden; /* Safety guard against text blowout */
     }
 
     .charDetails {
       display: flex;
       flex-direction: column;
-      gap: 8px;
-      margin-bottom: 30px;
+      gap: 6px;
+      margin-bottom: 12px;
       font-family: 'Cascadia Code', Consolas, monospace; 
       text-transform: uppercase;
     }
@@ -192,23 +200,23 @@
     .detail-item {
       display: flex;
       align-items: center;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
     }
 
     .label {
-      width: 120px; 
+      width: 110px; 
       font-weight: bold;
       color: #888; 
       text-transform: uppercase;
-      font-size: 0.75rem;
+      font-size: 0.7rem;
       letter-spacing: 0.5px;
     }
 
     .separator {
       width: 2px;
-      height: 16px;
+      height: 14px;
       background-color: #444; 
-      margin: 0 15px;
+      margin: 0 12px;
     }
 
     .value {
@@ -224,26 +232,33 @@
       font-variation-settings: 'FILL' 0, 'wght' 350, 'GRAD' 0, 'opsz' 24;
     }
 
-    /* --- MOBILE RESPONSIVENESS --- */
+    /* --- MOBILE RESPONSIVENESS INSIDE FIXED IFRAME --- */
     @media (max-width: 800px) {
       .charMainContainer {
         flex-direction: column;
+        gap: 10px;
+        padding: 15px;
       }
       .charContainerLeft {
         flex: none;
         width: 100%;
-        max-width: 100%;
-        height: 400px;
+        height: 140px; /* Reduced to guarantee it leaves vertical space for profile components */
       }
       .charTitle {
-        font-size: 3.5rem;
+        font-size: 2.2rem;
+      }
+      .charDetails {
+        margin-bottom: 8px;
+      }
+      .charDescriptionText {
+        font-size: 0.85rem;
       }
     }
   </style>
 </head>
 <body>
 
-  <div id="character-view-root"></div>
+  <div id="character-view-root" style="width:100%; height:100%; display:flex;"></div>
 
   <script>
     // =========================================================================
@@ -317,8 +332,6 @@
         if (!response.ok) throw new Error(`HTTP network error: status ${response.status}`);
         
         const csvRawData = await response.text();
-
-        // Optimized Fix: Handles \r\n line break encoding perfectly to prevent broken URL strings
         const rows = csvRawData.split(/\r?\n/).slice(1).filter(row => row.trim() !== "");
 
         rows.forEach(row => {
