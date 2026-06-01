@@ -1,8 +1,8 @@
 title,icon,color,link
-Royal,crown,#FF9900,obsidian://open?vault=ThatMan's%20Lore&file=Characters%2FThe%20Royals
+Royal,crown,#FF9900,#royal
 SINGLE,partner_heart,#ff4757,
-Father : King,male,#2B95FF,obsidian://open?vault=ThatMan's%20Lore&file=Characters%2FInterceptors%2FThe%20Royals%2FKing
-Mother : queen,female,#FF80F2,obsidian://open?vault=ThatMan's%20Lore&file=Characters%2FInterceptors%2FThe%20Royals%2FQueen
+Father : King,male,#2B95FF,#king
+Mother : queen,female,#FF80F2,#queen
 AGILE,electric_bolt,#ffa502,
 aggressive,sentiment_extremely_dissatisfied,#2F3C45,
 mortality fixation,skeleton,#000000,
