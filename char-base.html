@@ -1,0 +1,62 @@
+<div id="eyluist-card-embed">
+    <style>
+        /* Import fonts & icons */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Oswald:wght@400;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
+
+        /* Scoping */
+        #eyluist-card-embed { font-family: 'Inconsolata', sans-serif; display: flex; justify-content: center; }
+        
+        #eyluist-card-embed .character-card {
+            max-width: 400px;
+            width: 100%;
+            background: #121212;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            border: 1px solid #222;
+            color: #fff;
+        }
+
+        #eyluist-card-embed .character-card img { width: 100%; border-radius: 8px; display: block; }
+        #eyluist-card-embed .char-name { font-family: 'Montserrat', sans-serif; text-transform: uppercase; margin: 15px 0 10px 0; font-size: 2.5rem; }
+        #eyluist-card-embed .info-row { margin: 8px 0; font-size: 14px; text-transform: uppercase; text-align: left;}
+        #eyluist-card-embed .info-row strong { color: #888; }
+        #eyluist-card-embed .description { margin-top: 15px; padding: 15px; background: #1a1a1a; border-radius: 6px; font-style: italic; color: #ccc; border-left: 3px solid #444; }
+
+        #eyluist-card-embed #chip-target { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+
+        #eyluist-card-embed .trait-chip {
+            display: inline-flex;
+            align-items: center;
+            padding: 6px 12px;
+            border-radius: 20px;
+            background: #2d2d2d;
+            font-size: 12px;
+            font-weight: 600;
+            text-decoration: none;
+            color: white;
+            border: 1px solid #444;
+            white-space: nowrap;
+        }
+
+        #eyluist-card-embed .trait-icon {
+            font-family: 'Material Symbols Outlined';
+            font-size: 20px !important;
+            margin-right: 8px;
+            color: var(--icon-color, #fff);
+            background-color: transparent !important;
+        }
+    </style>
+
+    <div class="character-card">
+        <img id="char-image" src="" alt="Calling Card">
+        <h1 id="char-name" class="char-name"></h1>
+        <div class="info-row"><strong>Gender:</strong> <span id="char-gender"></span></div>
+        <div class="info-row"><strong>Date of Birth:</strong> <span id="char-dob"></span></div>
+        <div class="info-row"><strong>Crimsoft ID:</strong> <span id="char-id"></span></div>
+        <div class="info-row"><strong>Status:</strong> <span id="char-status"></span></div>
+        <div id="char-description" class="description"></div>
+        <div id="chip-target"></div>
+    </div>
+</div>
