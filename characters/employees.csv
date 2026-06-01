@@ -1,0 +1,3 @@
+id	fname	mname	lname	user	pass	prof	dob	blood	med	loc	status	admin	notes
+92110	Jackson	A.	Christopher	admin	admin	MARSHAL	11/20/1985	O+	None	SECTOR-1	normal	TRUE	Senior commanding officer.
+79001	Ivy	L.	Vance	ivance	123	COURIER	04/12/1992	B-	None	SECTOR-4	normal	FALSE	No current notes.
