@@ -2,10 +2,11 @@
   <div id="header-container"></div>
 
   <script>
+    // 1. UNIQUE CHARACTER DATA: Edit this for each new character embed file
     const cardData = {
-        name: "Rook",
+        name: "fag",
         logoUrl: "https://github.com/ThatMan023/Eyluist/blob/a82eeb5f3177b8486610b494ab1e0dd9446696c6/characters/Bishop_CallingCard.png?raw=true",
-        csvFile: "",
+        csvFile: "https://raw.githubusercontent.com/ThatMan023/Eyluist/a82eeb5f3177b8486610b494ab1e0dd9446696c6/characters/Bishop_Chips.csv",
         gender: "Female",
         genderColor: "#ff5983",
         dob: "June 27th, 2074",
@@ -14,8 +15,53 @@
         statusColor: "#ABFFC1",
         description: "THATMAN WILL ADD INFO HERE"
     };
+
+    // 2. FETCH TEMPLATE AND INITIALIZE
+    document.addEventListener('DOMContentLoaded', () => {
+        // Change this URL to wherever your base template actually lives
+        fetch('https://raw.githack.com/ThatMan023/Eyluist/97927dec90f21f77d0b619ad03f6c48da6f1cdd2/TESTING.html')
+            .then(response => response.text())
+            .then(html => {
+                // Insert the base template into the DOM
+                const container = document.getElementById('header-container');
+                if (container) container.innerHTML = html;
+                
+                // Now that the template HTML is on the page, populate it with our data
+                initCard(cardData);
+            })
+            .catch(err => console.error("Error loading template:", err));
+    });
+
+    // 3. POPULATION LOGIC 
+    function initCard(data) {
+        document.getElementById('char-image').src = data.logoUrl;
+        document.getElementById('char-name').textContent = data.name;
+        document.getElementById('char-gender').textContent = data.gender;
+        document.getElementById('char-gender').style.color = data.genderColor;
+        document.getElementById('char-dob').textContent = data.dob;
+        document.getElementById('char-id').textContent = data.crimsoftId;
+        document.getElementById('char-status').textContent = data.status;
+        document.getElementById('char-status').style.color = data.statusColor;
+        document.getElementById('char-description').textContent = data.description;
+        loadChips(data.csvFile);
+    }
+
+    async function loadChips(url) {
+        const container = document.getElementById('chip-target');
+        try {
+            const res = await fetch(url);
+            const data = await res.text();
+            const rows = data.split('\n').slice(1).filter(r => r.trim() !== "");
+            rows.forEach(r => {
+                const [t, i, c, l] = r.split(',').map(x => x.trim());
+                const el = document.createElement(l ? 'a' : 'div');
+                if (l) { el.href = l; el.target = "_blank"; }
+                el.className = 'trait-chip';
+                el.style.setProperty('--icon-color', c);
+                el.innerHTML = `<span class="trait-icon material-symbols-outlined">${i}</span><span>${t.toUpperCase()}</span>`;
+                container.appendChild(el);
+            });
+        } catch(e) { console.error("Error loading CSV:", e); }
+    }
   </script>
-
-  <script src="https://raw.githack.com/ThatMan023/Eyluist/cfd2f6d5220c51b279ed723a73279d810cdd783f/char-embed.js"></script>
 </body>
-
