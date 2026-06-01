@@ -1,99 +1,415 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Character Profile</title>
-    <style>
-        /* Basic styling to ensure the container is visible */
-        #header-container { margin: 20px; }
-        .trait-chip { display: inline-flex; align-items: center; margin: 5px; padding: 5px; border: 1px solid #ccc; }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Character Dashboard</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Oswald:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+  <style>
+    :root {
+      --bg-color: #1a1a1a;
+      --container-bg: #131313;
+      --text-color: #ffffff;
+      --gender-color: #ffffff;
+      --chip-bg: #2d2d2d;
+      --main-font: 'Inter', sans-serif;
+      --chip-font: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    /* Auto Gender Colors */
+    [data-gender="male"] { --gender-color: #2B95FF; }
+    [data-gender="female"] { --gender-color: #ff5983; }
+
+    body {
+      background-color: transparent; 
+      color: var(--text-color);
+      margin: 0;
+      display: flex;
+      justify-content: center; 
+      align-items: center;     
+      height: 100vh;       
+      padding: 10px;
+      box-sizing: border-box;
+      font-family: var(--main-font);
+      overflow: hidden; 
+    }
+
+    .charMainContainer {
+      display: flex;
+      flex-direction: row;
+      align-items: center; 
+      gap: 20px; 
+      width: 100%;
+      max-width: 1100px;
+      height: 100%; 
+      max-height: calc(100vh - 20px);
+      background: var(--container-bg);
+      padding: 20px; 
+      border-radius: 25px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+      margin: auto; 
+      box-sizing: border-box;
+    }
+
+    /* --- LEFT SIDE: PROFILE PICTURE --- */
+    .charContainerLeft {
+      flex: 0 0 32%; 
+      height: 100%;
+      max-height: 100%;
+      border-radius: 20px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .charImage {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 33%; 
+      transition: transform 0.5s ease;
+      user-select: none;
+      display: block;
+    }
+
+    .charImage:hover {
+      transform: scale(1.05);
+    }
+
+    .genderSelect {
+      color: var(--gender-color);
+      text-shadow: 0 0 15px var(--gender-color);
+      background: rgba(25, 25, 25, 0.4);
+      box-shadow: 0px 0px 5px 1px rgba(255, 255, 255, 0.5);
+      padding: 8px;
+      margin: 12px;
+      position: absolute;
+      top: 0;
+      right: 0;
+      z-index: 10;
+      font-size: 2rem;
+      border-radius: 50%;
+      backdrop-filter: blur(4px);
+      user-select: none;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 38px;
+      height: 38px;
+    }
+
+    /* --- RIGHT SIDE: DESCRIPTION AREA --- */
+    .charContainerRight {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      justify-content: center; 
+    }
+
+    .charTitle {
+      text-align: center;
+      font-size: 3rem; 
+      margin: 0 0 5px 0;
+      padding: 0;
+      text-transform: uppercase;
+      font-family: 'Oswald', sans-serif;
+      line-height: 1.1;
+    }
+
+    .titleSeparator {
+      width: 70%;
+      height: 1px;
+      border: none;
+      background: linear-gradient(to right, transparent, #555, transparent);
+      margin: 5px auto 12px auto;
+    }
+
+    /* --- CHIPS --- */
+    .trait-container {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      margin-bottom: 12px;
+      user-select: none;
+    }
+
+    .trait-chip {
+      display: flex;
+      align-items: center;
+      background-color: var(--chip-bg);
+      color: var(--text-color);
+      padding: 4px 12px 4px 4px;
+      border-radius: 50px;
+      font-family: var(--chip-font);
+      font-size: 11px; 
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      width: fit-content;
+      transition: all 0.2s ease;
+      border: 1px solid var(--icon-color, #555);
+      white-space: nowrap;
+      text-decoration: none;
+    }
+
+    .trait-chip:hover {
+      transform: translateY(-2px);
+      background-color: #3d3d3d;
+    }
+
+    .trait-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px; 
+      height: 24px;
+      background-color: var(--icon-color, #555);
+      color: white;
+      border-radius: 50%;
+      margin-right: 8px;
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+
+    /* --- TEXT DESCRIPTION --- */
+    .charDescriptionText {
+      font-size: 0.95rem; 
+      line-height: 1.5;
+      color: #cccccc;
+      text-align: justify;
+      margin: 0;
+      overflow: shown; 
+    }
+
+    .charDetails {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 12px;
+      font-family: 'Cascadia Code', Consolas, monospace; 
+      text-transform: uppercase;
+    }
+
+    .detail-item {
+      display: flex;
+      align-items: center;
+      font-size: 0.85rem;
+    }
+
+    .label {
+      width: 110px; 
+      font-weight: bold;
+      color: #888; 
+      text-transform: uppercase;
+      font-size: 0.7rem;
+      letter-spacing: 0.5px;
+    }
+
+    .separator {
+      width: 2px;
+      height: 14px;
+      background-color: #444; 
+      margin: 0 12px;
+    }
+
+    .value {
+      color: #fff; 
+      font-weight: 500;
+    }
+
+    /* --- ICON STYLES --- */
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 1, 'wght' 500, 'GRAD' 0, 'opsz' 24;
+    }
+    .genderSelect.material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 350, 'GRAD' 0, 'opsz' 24;
+    }
+
+    /* --- MOBILE RESPONSIVENESS INSIDE FIXED IFRAME --- */
+    @media (max-width: 800px) {
+      body {
+        padding: 5px;
+      }
+      .charMainContainer {
+        flex-direction: column;
+        gap: 8px;
+        padding: 12px;
+        max-height: calc(100vh - 10px);
+      }
+      .charContainerLeft {
+        flex: none;
+        width: 100%;
+        height: 250px; /* Reduced to guarantee vertical room for text dashboard elements */
+		min-height: 250px;	
+      }
+      .charImage {
+        object-position: center 20%;	
+      }
+      .genderSelect {
+        font-size: 1.5rem;
+        width: 32px;
+        height: 32px;
+        margin: 8px;
+        padding: 0;
+      }
+      .charTitle {
+        font-size: 2rem;
+        margin: 0;
+      }
+      .titleSeparator {
+        margin: 4px auto 8px auto;
+      }
+      .trait-container {
+        gap: 6px;
+        margin-bottom: 8px;
+      }
+      .trait-chip {
+        font-size: 10px;
+        padding: 2px 8px 2px 2px;
+      }
+      .trait-icon {
+        width: 20px;
+        height: 20px;
+        font-size: 12px;
+        margin-right: 6px;
+      }
+      .charDetails {
+        gap: 4px;
+        margin-bottom: 6px;
+      }
+      .detail-item {
+        font-size: 0.75rem;
+      }
+      .label {
+        width: 95px;
+        font-size: 0.65rem;
+      }
+      .separator {
+        margin: 0 8px;
+        height: 12px;
+      }
+      .charDescriptionText {
+        font-size: 0.8rem;
+        line-height: 1.4;
+        overflow: shown;
+        max-height: 75px;
+      }
+    }
+  </style>
 </head>
 <body>
 
-    <div id="header-container"></div>
+  <div id="character-view-root" style="width:100%; height:100%; display:flex;"></div>
 
-    <script>
-        // 1. UNIQUE CHARACTER DATA
-        const cardData = {
-            name: "king",
-            logoUrl: "https://github.com/ThatMan023/Eyluist/blob/main/characters/King_CallingCard.png?raw=true",
-            csvFile: "https://raw.githack.com/ThatMan023/Eyluist/8cdf9053191725f1c512ebc4c5fcd7a636853de9/characters/King_Chips.csv",
-            gender: "male",
-            genderColor: "#2B95FF",
-			//  		F :  #ff5983			M : #2B95FF
-            dob: "November 7th, 2070",
-            crimsoftId: "90DA.33AO - 27ZY.70.9JL",
-            status: "Okay",
-            statusColor: "#ABFFC1",
-            description: "THATMAN WILL ADD INFO HERE"
-        };
+  <script>
+    // =========================================================================
+    const CHARACTER_CONFIG = {
+      charName: 'king',
+      intGender: 'male',
+      imageName: 'King_CallingCard.png', 
+      dob: 'November 7th, 2070',
+      crimID: '90DA.33AO - 27ZY.70.9JL',
+      status: 'okay',
+      statusColor: '#ABFFC1',
+      description: '<p>THATMAN WILL ADD INFO HERE</p>',
+      csvName: 'https://thatman023.github.io/Eyluist/characters/King_Chips.csv'
+    };
+    // =========================================================================
 
-        // 2. FETCH TEMPLATE AND INITIALIZE
-        document.addEventListener('DOMContentLoaded', () => {
-            fetch('https://raw.githack.com/ThatMan023/Eyluist/1b438b603536be4ff4264778d2f5e39bd1425f9c/char-base.html')
-                .then(response => response.text())
-                .then(html => {
-                    const container = document.getElementById('header-container');
-                    if (container) container.innerHTML = html;
-                    
-                    initCard(cardData);
-                })
-                .catch(err => console.error("Error loading template:", err));
+    document.addEventListener("DOMContentLoaded", () => {
+      renderProfileCard();
+      loadChips();
+    });
+
+    function renderProfileCard() {
+      const targetElement = document.getElementById('character-view-root');
+      const genderClean = CHARACTER_CONFIG.intGender.toLowerCase();
+      
+      targetElement.innerHTML = `
+        <div class="charMainContainer" data-gender="${genderClean}">
+          <div class="charContainerLeft">
+            <img class="charImage" src="${CHARACTER_CONFIG.imageName}" alt="${CHARACTER_CONFIG.charName}">
+            <span data-gender="${genderClean}" class="genderSelect material-symbols-outlined" id="textGender">
+              ${genderClean === 'female' ? 'female' : 'male'}
+            </span>
+          </div>
+          <div class="charContainerRight">
+            <h1 class="charTitle">${CHARACTER_CONFIG.charName}</h1>
+            <hr class="titleSeparator">
+                
+            <div id="chip-target" class="trait-container"></div>
+            
+            <div class="charDescriptionText">
+              <div class="charDetails">
+                <div class="detail-item">
+                  <span class="label">Date of Birth</span>
+                  <div class="separator"></div>
+                  <span class="value">${CHARACTER_CONFIG.dob}</span>
+                </div> 
+                <div class="detail-item">
+                  <span class="label">Crimsoft ID</span>
+                  <div class="separator"></div> 
+                  <span class="value">${CHARACTER_CONFIG.crimID}</span>
+                </div> 
+                <div class="detail-item"> 
+                  <span class="label">Status</span>
+                  <div class="separator"></div> 
+                  <span class="value" style="color:${CHARACTER_CONFIG.statusColor}">${CHARACTER_CONFIG.status}</span>
+                </div>
+              </div>
+              <div>${CHARACTER_CONFIG.description}</div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    async function loadChips() {
+      const chipContainer = document.getElementById('chip-target');
+      if (!chipContainer) return;
+
+      try {
+        const response = await fetch(CHARACTER_CONFIG.csvName);
+        if (!response.ok) throw new Error(`HTTP network error: status ${response.status}`);
+        
+        const csvRawData = await response.text();
+        const rows = csvRawData.split(/\r?\n/).slice(1).filter(row => row.trim() !== "");
+
+        rows.forEach(row => {
+          const [title, icon, color, link] = row.split(',').map(item => item ? item.trim() : '');
+          if (!title) return; 
+          
+          const chip = document.createElement(link ? 'a' : 'div');
+          
+          if (link) {
+            chip.href = link;
+            chip.target = "_blank"; 
+            chip.style.cursor = "pointer";
+          }
+
+          chip.classList.add('trait-chip');
+          chip.style.setProperty('--icon-color', color || '#555');
+          
+          chip.innerHTML = `
+            <div class="trait-icon material-symbols-outlined" style="background-color: ${color || '#555'}">${icon || 'label'}</div>
+            <span>${title.toUpperCase()}</span>
+          `;
+          
+          chipContainer.appendChild(chip);
         });
-
-        // 3. POPULATION LOGIC 
-        function initCard(data) {
-            const img = document.getElementById('char-image');
-            if (img) img.src = data.logoUrl;
-            
-            const name = document.getElementById('char-name');
-            if (name) name.textContent = data.name;
-            
-            const gender = document.getElementById('char-gender');
-            if (gender) {
-                gender.textContent = data.gender;
-                gender.style.color = data.genderColor;
-            }
-            
-            const dob = document.getElementById('char-dob');
-            if (dob) dob.textContent = data.dob;
-            
-            const id = document.getElementById('char-id');
-            if (id) id.textContent = data.crimsoftId;
-            
-            const status = document.getElementById('char-status');
-            if (status) {
-                status.textContent = data.status;
-                status.style.color = data.statusColor;
-            }
-            
-            const desc = document.getElementById('char-description');
-            if (desc) desc.textContent = data.description;
-            
-            loadChips(data.csvFile);
-        }
-
-        async function loadChips(url) {
-            const container = document.getElementById('chip-target');
-            if (!container) return;
-            
-            try {
-                const res = await fetch(url);
-                const data = await res.text();
-                const rows = data.split('\n').slice(1).filter(r => r.trim() !== "");
-                rows.forEach(r => {
-                    const [t, i, c, l] = r.split(',').map(x => x.trim());
-                    const el = document.createElement(l ? 'a' : 'div');
-                    if (l) { el.href = l; el.target = "_blank"; }
-                    el.className = 'trait-chip';
-                    el.style.setProperty('--icon-color', c);
-                    el.innerHTML = `<span class="trait-icon material-symbols-outlined">${i}</span><span>${t.toUpperCase()}</span>`;
-                    container.appendChild(el);
-                });
-            } catch(e) { console.error("Error loading CSV:", e); }
-        }
-    </script>
+      } catch (error) {
+        console.error("Could not read CSV data file source:", error);
+        chipContainer.innerHTML = "<small style='color:#ff5983;'>CSV ERROR</small>";
+      }
+    }
+  </script>
 </body>
 </html>
