@@ -1,67 +1,14 @@
-<body>
-  <div id="header-container"></div>
+<iframe class="char-icon-embed"
+src="https://raw.githack.com/ThatMan023/Eyluist/92ec4c7ab9139c241ee2a245a32544a5d93b1b40/characters/Bishop.html"
+width="100%"
+height="100%"
+scrolling="no"
+frameborder="0">
+</iframe>
 
-  <script>
-    // 1. UNIQUE CHARACTER DATA: Edit this for each new character embed file
-    const cardData = {
-        name: "fag",
-        logoUrl: "characters/Bishop_CallingCard.png?raw=true",
-        csvFile: "https://raw.githack.com/ThatMan023/Eyluist/8cdf9053191725f1c512ebc4c5fcd7a636853de9/characters/Rook_Chips.csv",
-        gender: "Female",
-        genderColor: "#ff5983",
-        dob: "June 27th, 2074",
-        crimsoftId: "67VJ.71GV - 68UP.35.4FP",
-        status: "Okay",
-        statusColor: "#ABFFC1",
-        description: "THATMAN WILL ADD INFO HERE"
-    };
+<style>
 
-    // 2. FETCH TEMPLATE AND INITIALIZE
-    document.addEventListener('DOMContentLoaded', () => {
-        // Change this URL to wherever your base template actually lives
-        fetch('https://raw.githack.com/ThatMan023/Eyluist/3f96156582dbb1062887addbcf9fccf97c0e0e06/char-base.html')
-            .then(response => response.text())
-            .then(html => {
-                // Insert the base template into the DOM
-                const container = document.getElementById('header-container');
-                if (container) container.innerHTML = html;
-                
-                // Now that the template HTML is on the page, populate it with our data
-                initCard(cardData);
-            })
-            .catch(err => console.error("Error loading template:", err));
-    });
-
-    // 3. POPULATION LOGIC 
-    function initCard(data) {
-        document.getElementById('char-image').src = data.logoUrl;
-        document.getElementById('char-name').textContent = data.name;
-        document.getElementById('char-gender').textContent = data.gender;
-        document.getElementById('char-gender').style.color = data.genderColor;
-        document.getElementById('char-dob').textContent = data.dob;
-        document.getElementById('char-id').textContent = data.crimsoftId;
-        document.getElementById('char-status').textContent = data.status;
-        document.getElementById('char-status').style.color = data.statusColor;
-        document.getElementById('char-description').textContent = data.description;
-        loadChips(data.csvFile);
-    }
-
-    async function loadChips(url) {
-        const container = document.getElementById('chip-target');
-        try {
-            const res = await fetch(url);
-            const data = await res.text();
-            const rows = data.split('\n').slice(1).filter(r => r.trim() !== "");
-            rows.forEach(r => {
-                const [t, i, c, l] = r.split(',').map(x => x.trim());
-                const el = document.createElement(l ? 'a' : 'div');
-                if (l) { el.href = l; el.target = "_blank"; }
-                el.className = 'trait-chip';
-                el.style.setProperty('--icon-color', c);
-                el.innerHTML = `<span class="trait-icon material-symbols-outlined">${i}</span><span>${t.toUpperCase()}</span>`;
-                container.appendChild(el);
-            });
-        } catch(e) { console.error("Error loading CSV:", e); }
-    }
-  </script>
-</body>
+.char-icon-embed {
+min-height: 1200px;
+}
+</style>
