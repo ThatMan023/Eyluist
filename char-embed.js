@@ -1,7 +1,7 @@
 // Wait for the page to load
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Fetch the base template (Ensure this URL points to your latest base HTML)
-    fetch('char-base.html')
+    // 1. Fetch the base template (Fixed URL to point to raw.githubusercontent.com and fixed the missing 'c' in the hash)
+    fetch('https://raw.githack.com/ThatMan023/Eyluist/cfd2f6d5220c51b279ed723a73279d810cdd783f/char-base.html')
         .then(response => response.text())
         .then(html => {
             // Insert the base template into the DOM
