@@ -26,30 +26,30 @@
     [data-gender="female"] { --gender-color: #ff5983; }
 
     body {
-      background-color: transparent; /* Made transparent to honor parent iframe styling */
+      background-color: transparent; 
       color: var(--text-color);
       margin: 0;
       display: flex;
       justify-content: center; 
       align-items: center;     
-      height: 100vh; /* Changed to lock element boundaries exactly to iframe height */       
+      height: 100vh;       
       padding: 10px;
       box-sizing: border-box;
       font-family: var(--main-font);
-      overflow: hidden; /* Completely disables scrolling inside the document */
+      overflow: hidden; 
     }
 
     .charMainContainer {
       display: flex;
       flex-direction: row;
-      align-items: center; /* Aligns content cleanly when compressed vertically */
-      gap: 20px; /* Reduced from 30px */
+      align-items: center; 
+      gap: 20px; 
       width: 100%;
       max-width: 1100px;
-      height: 100%; /* Forces card container to scale dynamically to iframe height */
+      height: 100%; 
       max-height: calc(100vh - 20px);
       background: var(--container-bg);
-      padding: 20px; /* Tighter padding for optimization */
+      padding: 20px; 
       border-radius: 25px;
       box-shadow: 0 10px 30px rgba(0,0,0,0.4);
       margin: auto; 
@@ -58,7 +58,7 @@
 
     /* --- LEFT SIDE: PROFILE PICTURE --- */
     .charContainerLeft {
-      flex: 0 0 32%; /* Balanced to give description text more room */
+      flex: 0 0 32%; 
       height: 100%;
       max-height: 100%;
       border-radius: 20px;
@@ -70,6 +70,7 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
+      object-position: center 33%; 
       transition: transform 0.5s ease;
       user-select: none;
       display: block;
@@ -107,12 +108,12 @@
       display: flex;
       flex-direction: column;
       height: 100%;
-      justify-content: center; /* Distributes inner blocks proportionally inside frame */
+      justify-content: center; 
     }
 
     .charTitle {
       text-align: center;
-      font-size: 3rem; /* Optimized from 5.5rem to prevent vertical blowout */
+      font-size: 3rem; 
       margin: 0 0 5px 0;
       padding: 0;
       text-transform: uppercase;
@@ -148,7 +149,7 @@
       padding: 4px 12px 4px 4px;
       border-radius: 50px;
       font-family: var(--chip-font);
-      font-size: 11px; /* Scaled down slightly */
+      font-size: 11px; 
       font-weight: 600;
       letter-spacing: 0.5px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.3);
@@ -168,7 +169,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 24px; /* Scaled down slightly */
+      width: 24px; 
       height: 24px;
       background-color: var(--icon-color, #555);
       color: white;
@@ -180,12 +181,12 @@
 
     /* --- TEXT DESCRIPTION --- */
     .charDescriptionText {
-      font-size: 0.95rem; /* Adjusted for scannable, compact UI height */
+      font-size: 0.95rem; 
       line-height: 1.5;
       color: #cccccc;
       text-align: justify;
       margin: 0;
-      overflow: hidden; /* Safety guard against text blowout */
+      overflow: shown; 
     }
 
     .charDetails {
@@ -234,24 +235,72 @@
 
     /* --- MOBILE RESPONSIVENESS INSIDE FIXED IFRAME --- */
     @media (max-width: 800px) {
+      body {
+        padding: 5px;
+      }
       .charMainContainer {
         flex-direction: column;
-        gap: 10px;
-        padding: 15px;
+        gap: 8px;
+        padding: 12px;
+        max-height: calc(100vh - 10px);
       }
       .charContainerLeft {
         flex: none;
         width: 100%;
-        height: 140px; /* Reduced to guarantee it leaves vertical space for profile components */
+        height: 250px; /* Reduced to guarantee vertical room for text dashboard elements */
+		min-height: 250px;	
+      }
+      .charImage {
+        object-position: center 20%;	
+      }
+      .genderSelect {
+        font-size: 1.5rem;
+        width: 32px;
+        height: 32px;
+        margin: 8px;
+        padding: 0;
       }
       .charTitle {
-        font-size: 2.2rem;
+        font-size: 2rem;
+        margin: 0;
       }
-      .charDetails {
+      .titleSeparator {
+        margin: 4px auto 8px auto;
+      }
+      .trait-container {
+        gap: 6px;
         margin-bottom: 8px;
       }
+      .trait-chip {
+        font-size: 10px;
+        padding: 2px 8px 2px 2px;
+      }
+      .trait-icon {
+        width: 20px;
+        height: 20px;
+        font-size: 12px;
+        margin-right: 6px;
+      }
+      .charDetails {
+        gap: 4px;
+        margin-bottom: 6px;
+      }
+      .detail-item {
+        font-size: 0.75rem;
+      }
+      .label {
+        width: 95px;
+        font-size: 0.65rem;
+      }
+      .separator {
+        margin: 0 8px;
+        height: 12px;
+      }
       .charDescriptionText {
-        font-size: 0.85rem;
+        font-size: 0.8rem;
+        line-height: 1.4;
+        overflow: shown;
+        max-height: 75px;
       }
     }
   </style>
