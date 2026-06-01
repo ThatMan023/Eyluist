@@ -1,116 +1,99 @@
-<div id="eyluist-card-embed">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Character Profile</title>
     <style>
-        /* 1. Import fonts & icons */
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Oswald:wght@400;700&display=swap');
-        @import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
-
-        /* 2. Scoping */
-        #eyluist-card-embed { font-family: 'Inconsolata', sans-serif; display: flex; justify-content: center; }
-        
-        #eyluist-card-embed .character-card {
-            max-width: 400px;
-            width: 100%;
-            background: #121212;
-            border-radius: 12px;
-            padding: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            border: 1px solid #222;
-            color: #fff;
-        }
-
-        #eyluist-card-embed .character-card img { width: 100%; border-radius: 8px; display: block; }
-
-        #eyluist-card-embed .char-name { font-family: 'Montserrat', sans-serif; text-transform: uppercase; margin: 15px 0 10px 0; font-size: 2.5rem; }
-
-        #eyluist-card-embed .info-row { margin: 8px 0; font-size: 14px; text-transform: uppercase; text-align: left;}
-        #eyluist-card-embed .info-row strong { color: #888; }
-
-        #eyluist-card-embed .description { margin-top: 15px; padding: 15px; background: #1a1a1a; border-radius: 6px; font-style: italic; color: #ccc; border-left: 3px solid #444; }
-
-        /* --- FIXED CHIP CSS --- */
-        #eyluist-card-embed #chip-target { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
-
-        #eyluist-card-embed .trait-chip {
-            display: inline-flex;
-            align-items: center;
-            padding: 6px 12px;
-            border-radius: 20px;
-            background: #2d2d2d;
-            font-size: 12px;
-            font-weight: 600;
-            text-decoration: none;
-            color: white;
-            border: 1px solid #444;
-            white-space: nowrap;
-        }
-
-        /* The Fix: Target the icon text color directly */
-        #eyluist-card-embed .trait-icon {
-            font-family: 'Material Symbols Outlined';
-            font-size: 20px !important;
-            margin-right: 8px;
-            color: var(--icon-color, #fff); /* Sets the icon color */
-            background-color: transparent !important; /* Removes the colored circle background */
-        }
+        /* Basic styling to ensure the container is visible */
+        #header-container { margin: 20px; }
+        .trait-chip { display: inline-flex; align-items: center; margin: 5px; padding: 5px; border: 1px solid #ccc; }
     </style>
+</head>
+<body>
 
-    <div class="character-card">
-      <a href="#bishop"><img id="char-image" src="" alt="Calling Card"></a>
-        <h1 id="char-name" class="char-name"></h1>
-        <div class="info-row"><strong>Gender:</strong> <span id="char-gender"></span></div>
-        <div class="info-row"><strong>Date of Birth:</strong> <span id="char-dob"></span></div>
-        <div class="info-row"><strong>Crimsoft ID:</strong> <span id="char-id"></span></div>
-        <div class="info-row"><strong>Status:</strong> <span id="char-status"></span></div>
-        <div id="char-description" class="description"></div>
-        <div id="chip-target"></div>
-    </div>
-</div>
+    <div id="header-container"></div>
 
-<script>
-    const cardData = {
-        name: "bishop",
-        logoUrl: "https://github.com/ThatMan023/Eyluist/blob/a82eeb5f3177b8486610b494ab1e0dd9446696c6/characters/King_CallingCard.png?raw=true",
-        csvFile: "https://raw.githubusercontent.com/ThatMan023/Eyluist/a82eeb5f3177b8486610b494ab1e0dd9446696c6/characters/Bishop_Chips.csv",
-        gender: "Male",
-        genderColor: "#2B95FF",
-		// FEMALE #ff5983  -  MALE #2B95FF
-        dob: "August 21st, 2073",
-        crimsoftId: "52HR.54ZQ - 31OC.64.9UD",
-        status: "Okay",
-        statusColor: "#ABFFC1",
-        description: "THATMAN WILL ADD INFO HERE"
-    };
+    <script>
+        // 1. UNIQUE CHARACTER DATA
+        const cardData = {
+            name: "king",
+            logoUrl: "https://github.com/ThatMan023/Eyluist/blob/main/characters/King_CallingCard.png?raw=true",
+            csvFile: "https://raw.githack.com/ThatMan023/Eyluist/8cdf9053191725f1c512ebc4c5fcd7a636853de9/characters/King_Chips.csv",
+            gender: "male",
+            genderColor: "#2B95FF",
+			//  		F :  #ff5983			M : #2B95FF
+            dob: "November 7th, 2070",
+            crimsoftId: "90DA.33AO - 27ZY.70.9JL",
+            status: "Okay",
+            statusColor: "#ABFFC1",
+            description: "THATMAN WILL ADD INFO HERE"
+        };
 
-    function init() {
-        document.getElementById('char-image').src = cardData.logoUrl;
-        document.getElementById('char-name').textContent = cardData.name;
-        document.getElementById('char-gender').textContent = cardData.gender;
-        document.getElementById('char-gender').style.color = cardData.genderColor;
-        document.getElementById('char-dob').textContent = cardData.dob;
-        document.getElementById('char-id').textContent = cardData.crimsoftId;
-        document.getElementById('char-status').textContent = cardData.status;
-        document.getElementById('char-status').style.color = cardData.statusColor;
-        document.getElementById('char-description').textContent = cardData.description;
-        loadChips(cardData.csvFile);
-    }
+        // 2. FETCH TEMPLATE AND INITIALIZE
+        document.addEventListener('DOMContentLoaded', () => {
+            fetch('https://raw.githack.com/ThatMan023/Eyluist/1b438b603536be4ff4264778d2f5e39bd1425f9c/char-base.html')
+                .then(response => response.text())
+                .then(html => {
+                    const container = document.getElementById('header-container');
+                    if (container) container.innerHTML = html;
+                    
+                    initCard(cardData);
+                })
+                .catch(err => console.error("Error loading template:", err));
+        });
 
-    async function loadChips(url) {
-        const container = document.getElementById('chip-target');
-        try {
-            const res = await fetch(url);
-            const data = await res.text();
-            const rows = data.split('\n').slice(1).filter(r => r.trim() !== "");
-            rows.forEach(r => {
-                const [t, i, c, l] = r.split(',').map(x => x.trim());
-                const el = document.createElement(l ? 'a' : 'div');
-                if (l) { el.href = l; el.target = "_blank"; }
-                el.className = 'trait-chip';
-                // Pass color via CSS variable
-                el.style.setProperty('--icon-color', c);
-                el.innerHTML = `<span class="trait-icon material-symbols-outlined">${i}</span><span>${t.toUpperCase()}</span>`;
-                container.appendChild(el);
-            });
-        } catch(e) { console.error(e); }
-    }
-    init();
-</script>
+        // 3. POPULATION LOGIC 
+        function initCard(data) {
+            const img = document.getElementById('char-image');
+            if (img) img.src = data.logoUrl;
+            
+            const name = document.getElementById('char-name');
+            if (name) name.textContent = data.name;
+            
+            const gender = document.getElementById('char-gender');
+            if (gender) {
+                gender.textContent = data.gender;
+                gender.style.color = data.genderColor;
+            }
+            
+            const dob = document.getElementById('char-dob');
+            if (dob) dob.textContent = data.dob;
+            
+            const id = document.getElementById('char-id');
+            if (id) id.textContent = data.crimsoftId;
+            
+            const status = document.getElementById('char-status');
+            if (status) {
+                status.textContent = data.status;
+                status.style.color = data.statusColor;
+            }
+            
+            const desc = document.getElementById('char-description');
+            if (desc) desc.textContent = data.description;
+            
+            loadChips(data.csvFile);
+        }
+
+        async function loadChips(url) {
+            const container = document.getElementById('chip-target');
+            if (!container) return;
+            
+            try {
+                const res = await fetch(url);
+                const data = await res.text();
+                const rows = data.split('\n').slice(1).filter(r => r.trim() !== "");
+                rows.forEach(r => {
+                    const [t, i, c, l] = r.split(',').map(x => x.trim());
+                    const el = document.createElement(l ? 'a' : 'div');
+                    if (l) { el.href = l; el.target = "_blank"; }
+                    el.className = 'trait-chip';
+                    el.style.setProperty('--icon-color', c);
+                    el.innerHTML = `<span class="trait-icon material-symbols-outlined">${i}</span><span>${t.toUpperCase()}</span>`;
+                    container.appendChild(el);
+                });
+            } catch(e) { console.error("Error loading CSV:", e); }
+        }
+    </script>
+</body>
+</html>
