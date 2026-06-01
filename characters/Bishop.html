@@ -1,67 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Character Profile</title>
+    <style>
+        /* Basic styling to ensure the container is visible */
+        #header-container { margin: 20px; }
+        .trait-chip { display: inline-flex; align-items: center; margin: 5px; padding: 5px; border: 1px solid #ccc; }
+    </style>
+</head>
 <body>
-  <div id="header-container"></div>
 
-  <script>
-    // 1. UNIQUE CHARACTER DATA: Edit this for each new character embed file
-    const cardData = {
-        name: "fag",
-        logoUrl: "https://github.com/ThatMan023/Eyluist/blob/main/characters/Bishop_CallingCard.png?raw=true",
-        csvFile: "https://raw.githack.com/ThatMan023/Eyluist/8cdf9053191725f1c512ebc4c5fcd7a636853de9/characters/Bishop_Chips.csv",
-        gender: "Female",
-        genderColor: "#ff5983",
-        dob: "June 27th, 2074",
-        crimsoftId: "67VJ.71GV - 68UP.35.4FP",
-        status: "Okay",
-        statusColor: "#ABFFC1",
-        description: "THATMAN WILL ADD INFO HERE"
-    };
+    <div id="header-container"></div>
 
-    // 2. FETCH TEMPLATE AND INITIALIZE
-    document.addEventListener('DOMContentLoaded', () => {
-        // Change this URL to wherever your base template actually lives
-        fetch('https://raw.githack.com/ThatMan023/Eyluist/92ec4c7ab9139c241ee2a245a32544a5d93b1b40/char-base.html')
-            .then(response => response.text())
-            .then(html => {
-                // Insert the base template into the DOM
-                const container = document.getElementById('header-container');
-                if (container) container.innerHTML = html;
-                
-                // Now that the template HTML is on the page, populate it with our data
-                initCard(cardData);
-            })
-            .catch(err => console.error("Error loading template:", err));
-    });
+    <script>
+        // 1. UNIQUE CHARACTER DATA
+        const cardData = {
+            name: "fag",
+            logoUrl: "https://github.com/ThatMan023/Eyluist/blob/main/characters/Bishop_CallingCard.png?raw=true",
+            csvFile: "https://raw.githack.com/ThatMan023/Eyluist/8cdf9053191725f1c512ebc4c5fcd7a636853de9/characters/Bishop_Chips.csv",
+            gender: "Female",
+            genderColor: "#ff5983",
+            dob: "June 27th, 2074",
+            crimsoftId: "67VJ.71GV - 68UP.35.4FP",
+            status: "Okay",
+            statusColor: "#ABFFC1",
+            description: "THATMAN WILL ADD INFO HERE"
+        };
 
-    // 3. POPULATION LOGIC 
-    function initCard(data) {
-        document.getElementById('char-image').src = data.logoUrl;
-        document.getElementById('char-name').textContent = data.name;
-        document.getElementById('char-gender').textContent = data.gender;
-        document.getElementById('char-gender').style.color = data.genderColor;
-        document.getElementById('char-dob').textContent = data.dob;
-        document.getElementById('char-id').textContent = data.crimsoftId;
-        document.getElementById('char-status').textContent = data.status;
-        document.getElementById('char-status').style.color = data.statusColor;
-        document.getElementById('char-description').textContent = data.description;
-        loadChips(data.csvFile);
-    }
+        // 2. FETCH TEMPLATE AND INITIALIZE
+        document.addEventListener('DOMContentLoaded', () => {
+            fetch('https://raw.githack.com/ThatMan023/Eyluist/1b438b603536be4ff4264778d2f5e39bd1425f9c/char-base.html')
+                .then(response => response.text())
+                .then(html => {
+                    const container = document.getElementById('header-container');
+                    if (container) container.innerHTML = html;
+                    
+                    initCard(cardData);
+                })
+                .catch(err => console.error("Error loading template:", err));
+        });
 
-    async function loadChips(url) {
-        const container = document.getElementById('chip-target');
-        try {
-            const res = await fetch(url);
-            const data = await res.text();
-            const rows = data.split('\n').slice(1).filter(r => r.trim() !== "");
-            rows.forEach(r => {
-                const [t, i, c, l] = r.split(',').map(x => x.trim());
-                const el = document.createElement(l ? 'a' : 'div');
-                if (l) { el.href = l; el.target = "_blank"; }
-                el.className = 'trait-chip';
-                el.style.setProperty('--icon-color', c);
-                el.innerHTML = `<span class="trait-icon material-symbols-outlined">${i}</span><span>${t.toUpperCase()}</span>`;
-                container.appendChild(el);
-            });
-        } catch(e) { console.error("Error loading CSV:", e); }
-    }
-  </script>
+        // 3. POPULATION LOGIC 
+        function initCard(data) {
+            const img = document.getElementById('char-image');
+            if (img) img.src = data.logoUrl;
+            
+            const name = document.getElementById('char-name');
+            if (name) name.textContent = data.name;
+            
+            const gender = document.getElementById('char-gender');
+            if (gender) {
+                gender.textContent = data.gender;
+                gender.style.color = data.genderColor;
+            }
+            
+            const dob = document.getElementById('char-dob');
+            if (dob) dob.textContent = data.dob;
+            
+            const id = document.getElementById('char-id');
+            if (id) id.textContent = data.crimsoftId;
+            
+            const status = document.getElementById('char-status');
+            if (status) {
+                status.textContent = data.status;
+                status.style.color = data.statusColor;
+            }
+            
+            const desc = document.getElementById('char-description');
+            if (desc) desc.textContent = data.description;
+            
+            loadChips(data.csvFile);
+        }
+
+        async function loadChips(url) {
+            const container = document.getElementById('chip-target');
+            if (!container) return;
+            
+            try {
+                const res = await fetch(url);
+                const data = await res.text();
+                const rows = data.split('\n').slice(1).filter(r => r.trim() !== "");
+                rows.forEach(r => {
+                    const [t, i, c, l] = r.split(',').map(x => x.trim());
+                    const el = document.createElement(l ? 'a' : 'div');
+                    if (l) { el.href = l; el.target = "_blank"; }
+                    el.className = 'trait-chip';
+                    el.style.setProperty('--icon-color', c);
+                    el.innerHTML = `<span class="trait-icon material-symbols-outlined">${i}</span><span>${t.toUpperCase()}</span>`;
+                    container.appendChild(el);
+                });
+            } catch(e) { console.error("Error loading CSV:", e); }
+        }
+    </script>
 </body>
+</html>
