@@ -1,0 +1,35 @@
+<div class="charMainContainer" data-gender="${genderClean}">
+          <div class="charContainerLeft">
+            <img class="charImage" src="${CHARACTER_CONFIG.imageName}" alt="${CHARACTER_CONFIG.charName}">
+            <span data-gender="${genderClean}" class="genderSelect material-symbols-outlined" id="textGender">
+              ${genderClean === 'female' ? 'female' : 'male'}
+            </span>
+          </div>
+          <div class="charContainerRight">
+            <h1 class="charTitle">${CHARACTER_CONFIG.charName}</h1>
+            <hr class="titleSeparator">
+                
+            <div id="chip-target" class="trait-container"></div>
+            
+            <div class="charDescriptionText">
+              <div class="charDetails">
+                <div class="detail-item">
+                  <span class="label">Date of Birth</span>
+                  <div class="separator"></div>
+                  <span class="value">${CHARACTER_CONFIG.dob}</span>
+                </div> 
+                <div class="detail-item">
+                  <span class="label">Crimsoft ID</span>
+                  <div class="separator"></div> 
+                  <span class="value">${CHARACTER_CONFIG.crimID}</span>
+                </div> 
+                <div class="detail-item"> 
+                  <span class="label">Status</span>
+                  <div class="separator"></div> 
+                  <span class="value" style="color:${CHARACTER_CONFIG.statusColor}">${CHARACTER_CONFIG.status}</span>
+                </div>
+              </div>
+              <div>${CHARACTER_CONFIG.description}</div>
+            </div>
+          </div>
+        </div>
